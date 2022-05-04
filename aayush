@@ -1,0 +1,33 @@
+pipeline {
+agent any
+stages {
+stage('Plan Phase') {
+steps {
+echo 'Hello World'
+}
+}
+stage('Code Phase') {
+steps {
+input('Do you want to continue?')
+}
+}
+stage('Integrate Phase') {
+when {
+not{
+branch "master"
+}
+}
+steps{
+echo 'Integration passed'
+}
+}
+stage('Testing Phase') {
+parallel{
+stage('unit test'){
+steps{
+echo 'running test'
+}
+}
+}
+}
+}
